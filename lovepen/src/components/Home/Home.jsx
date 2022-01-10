@@ -4,12 +4,15 @@ import setupMockServer from "../../api/mockserver";
 import "./Home.css"
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const[loader , setLoader] = useState(false);
   useEffect(() => {
     (async function () {
       try {
         setupMockServer();
+        setLoader(true)
         const response = await axios.get("/api/users");
         console.log(response.data.users);
+        setLoader(false)
         setProducts(response.data.users);
       } catch (error) {
         console.log("error");
@@ -18,7 +21,9 @@ const Home = () => {
   }, []);
   console.log(products);
   return (
+    
       <div className ="products">
+        {loader && <div className="lds-heart"><div></div></div>}
           {products.map((product,index)=>(
               <div className ="card">
                     <div>
@@ -34,12 +39,15 @@ const Home = () => {
                     </div>
 
                     <div className ="product-price">
-                        {product.price}
+                        Rs {product.price} <button>wish</button>
                     </div>
 
-                    <div >
-                        <button className="product-add-button">Add to cart</button>
+                    <div  className="btn-div">
+                        <button className="product-add-button"> ADD TO cart</button>
+                       
+
                     </div>
+                   
 
 
                </div>

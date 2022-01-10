@@ -2,6 +2,9 @@ import React,{useState} from 'react'
 import {Link} from "react-router-dom"
 import {ImCross} from "react-icons/im"
 import {FiMenu} from "react-icons/fi"
+import {AiFillHome} from "react-icons/ai"
+import {BsFillCartCheckFill} from "react-icons/bs"
+import {FaRegHeart,FaUserAlt} from "react-icons/fa"
 
 import "./NavBar.css"
 const NavBar = () => {
@@ -15,19 +18,20 @@ const NavBar = () => {
               onClick={()=>setMobile(false)}
             >
                 <Link to ="/" className ="home">
-                    <li>Home</li>
+                    <li>{isMobile ?"Home":<AiFillHome/>}</li>
                 </Link>
 
                 <Link to ="/cart" className ="cart">
-                    <li>Cart</li>
+                <li>{isMobile ?"Cart":<BsFillCartCheckFill/>}</li>
                 </Link>
 
                 <Link to ="/wishlist" className ="wishlist">
-                    <li>Wishlist</li>
+                <li>{isMobile ?"Wishlist":<FaRegHeart/>}</li>
+                    
                 </Link>
 
                 <Link to ="/login" className ="login">
-                    <li>Login</li>
+                <li>{isMobile ?"Login":<FaUserAlt/>}</li>
                 </Link>
             </ul>
 
