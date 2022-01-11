@@ -4,9 +4,23 @@ import setupMockServer from "../../api/mockserver";
 import "./Home.css"
 import { useCart } from "../../context/CartContext";
 const Home = () => {
-  const {setItemsInCart} = useCart();
+  const {itemsInCart , setItemsInCart} = useCart();
   const [products, setProducts] = useState([]);
   const[loader , setLoader] = useState(false);
+
+  const addToCart =(product) =>{
+    console.log('adding to cart')
+    let newCart = [...itemsInCart];
+    let finalItemInCart = newCart.find((item)=>product.id === item.id)
+    if(!finalItemInCart){
+      finalItemInCart ={...product}
+      newCart.push(finalItemInCart)
+      setItemsInCart(newCart)
+
+    }
+    
+    
+  }
   useEffect(() => {
     (async function () {
       try {
@@ -45,7 +59,7 @@ const Home = () => {
                     </div>
 
                     <div  className="btn-div">
-                        <button  onClick={()=>setItemsInCart((items)=>[...items, product])}
+                        <button  onClick={()=>addToCart(product)}
                         className="product-add-button"> ADD TO cart</button>
                        
 
