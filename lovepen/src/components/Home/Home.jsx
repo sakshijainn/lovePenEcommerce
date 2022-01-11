@@ -23,11 +23,11 @@ const Home = () => {
   }, []);
   console.log(products);
   return (
-    
+     
       <div className ="products">
         {loader && <div className="lds-heart"><div></div></div>}
           {products.map((product,index)=>(
-              <div className ="card">
+              <div key={index} className ="card">
                     <div>
                         <img className="product-image" src={product.image} alt={product.name}/>
                     </div>
@@ -45,7 +45,7 @@ const Home = () => {
                     </div>
 
                     <div  className="btn-div">
-                        <button  onClick={()=>setItemsInCart((items)=>items+1)}
+                        <button  onClick={()=>setItemsInCart((items)=>[...items, product])}
                         className="product-add-button"> ADD TO cart</button>
                        
 
