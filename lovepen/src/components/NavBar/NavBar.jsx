@@ -7,7 +7,9 @@ import {BsFillCartCheckFill} from "react-icons/bs"
 import {FaRegHeart,FaUserAlt} from "react-icons/fa"
 
 import "./NavBar.css"
+import { useCart } from '../../context/CartContext'
 const NavBar = () => {
+    const{itemsInCart} = useCart();
     const[isMobile ,setMobile] = useState(false)
     return (
         <nav className ="navbar">
@@ -22,7 +24,7 @@ const NavBar = () => {
                 </Link>
 
                 <Link to ="/cart" className ="cart">
-                <li>{isMobile ?"Cart":<BsFillCartCheckFill/>}</li>
+                <li>{isMobile ?"Cart":<BsFillCartCheckFill/>}( {itemsInCart})</li>
                 </Link>
 
                 <Link to ="/wishlist" className ="wishlist">

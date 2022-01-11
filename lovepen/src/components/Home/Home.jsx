@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import setupMockServer from "../../api/mockserver";
 import "./Home.css"
+import { useCart } from "../../context/CartContext";
 const Home = () => {
+  const {setItemsInCart} = useCart();
   const [products, setProducts] = useState([]);
   const[loader , setLoader] = useState(false);
   useEffect(() => {
@@ -43,7 +45,8 @@ const Home = () => {
                     </div>
 
                     <div  className="btn-div">
-                        <button className="product-add-button"> ADD TO cart</button>
+                        <button  onClick={()=>setItemsInCart((items)=>items+1)}
+                        className="product-add-button"> ADD TO cart</button>
                        
 
                     </div>
