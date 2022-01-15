@@ -206,7 +206,7 @@ header {
   cursor: pointer;
 }
 
-.add-minus-quantity input {
+.add-minus-quantity span {
   width: 6rem;
   height: 3rem;
   border: 0.141rem solid var(--primary-color);
@@ -216,7 +216,7 @@ header {
   font-size: 1.6rem;
   text-align: center;
   text-transform: capitalize;
-  color: var(--primary-color);
+  color: black;
   margin: 0 1rem;
   border-radius: 0.5rem;
   outline: none;
