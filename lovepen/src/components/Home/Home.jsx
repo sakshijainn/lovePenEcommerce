@@ -3,8 +3,13 @@ import axios from "axios";
 import setupMockServer from "../../api/mockserver";
 import "./Home.css"
 import { useCart } from "../../context/CartContext";
+import { useWishList } from "../../context/WishListContext";
+
+
+
 const Home = () => {
   const {itemsInCart , setItemsInCart} = useCart();
+  const{itemsInWishList , setItemsInWishList} = useWishList();
   const [products, setProducts] = useState([]);
   const[loader , setLoader] = useState(false);
  
@@ -18,11 +23,21 @@ const Home = () => {
       finalItemInCart ={...product}
       newCart.push(finalItemInCart)
       setItemsInCart(newCart)
+ }}
 
-    }
-    
-    
-  }
+
+ const addToWishList =(product) =>{
+  console.log('adding to wishlist')
+  let newWishList = [...itemsInWishList];
+  let finalItemInWishList = newWishList.find((item)=>product.id === item.id)
+  if(!finalItemInWishList){
+    finalItemInWishList ={...product}
+    newWishList.push(finalItemInWishList)
+    setItemsInWishList(newWishList)
+}}
+
+
+
   useEffect(() => {
     (async function () {
       try {
@@ -37,7 +52,9 @@ const Home = () => {
       }
     })();
   }, []);
-  console.log(products);
+  
+
+
   return (
      
       <div className ="products">
@@ -57,7 +74,7 @@ const Home = () => {
                     </div>
 
                     <div className ="product-price">
-                        Rs {product.price} <button>wish</button>
+                        Rs {product.price} <button onClick={()=>addToWishList(product)}>wish</button>
                     </div>
 
                     <div  className="btn-div">

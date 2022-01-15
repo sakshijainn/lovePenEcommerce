@@ -9,11 +9,13 @@ import {FaRegHeart,FaUserAlt} from "react-icons/fa"
 
 import "./NavBar.css"
 import { useCart } from '../../context/CartContext'
+import {useWishList} from "../../context/WishListContext"
 import { useTheme } from '../../context/ThemeContext'
 
 
 const NavBar = () => {
     const{itemsInCart} = useCart();
+    const {itemsInWishList} = useWishList();
     const { toggleTheme } = useTheme();
     const[isMobile ,setMobile] = useState(false)
     return (
@@ -35,7 +37,7 @@ const NavBar = () => {
                 </Link>
 
                 <Link to ="/wishlist" className ="wishlist">
-                <li>{isMobile ?"Wishlist":<FaRegHeart/>}</li>
+                <li>{isMobile ?"Wishlist":<FaRegHeart/>}( {itemsInWishList.length})</li>
                     
                 </Link>
 

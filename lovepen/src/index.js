@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { CartProvider } from "./context/CartContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { WishListProvider } from "./context/WishListContext";
 
 
 
@@ -11,9 +12,14 @@ ReactDOM.render(
   <React.StrictMode>
 
   <ThemeProvider>
-      <CartProvider>
-              <App />
+     <WishListProvider>
+
+     <CartProvider>
+          <App />
       </CartProvider>
+
+     </WishListProvider>
+      
 
   </ThemeProvider>
     
