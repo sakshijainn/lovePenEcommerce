@@ -3,7 +3,7 @@ import {BrowserRouter as Router , Route , Switch} from "react-router-dom"
 import NavBar from './components/NavBar/NavBar.jsx'
 import Home from "./components/Home/Home.jsx"
 import Cart from "./components/Cart/Cart.jsx"
-import Wishlist from "./components/Login/Login.jsx"
+import Wishlist from "./components/Wishlist/Wishlist.jsx"
 import Login from "./components/Login/Login.jsx"
 const App = () => {
   return (
