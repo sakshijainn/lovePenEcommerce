@@ -4,6 +4,7 @@ import setupMockServer from "../../api/mockserver";
 import "./Home.css"
 import { useCart } from "../../context/CartContext";
 import { useWishList } from "../../context/WishListContext";
+import {BsFillHeartFill} from "react-icons/bs"
 
 
 
@@ -57,38 +58,42 @@ const Home = () => {
 
   return (
      
-      <div className ="products">
-        {loader && <div className="lds-heart"><div></div></div>}
-          {products.map((product,index)=>(
-              <div key={index} className ="card">
-                    <div>
-                        <img className="product-image" src={product.image} alt={product.name}/>
-                    </div>
+     
+ <div className ="products">
+ {loader && <div className="lds-heart"><div></div></div>}
+   {products.map((product,index)=>(
+       <div key={index} className ="card">
+             <div>
+                 <img className="product-image" src={product.image} alt={product.name}/>
+             </div>
 
-                    <div className ="product-name">
-                        <h3>{product.name}</h3>
-                    </div>
+             <div className ="product-name">
+                 <h3>{product.name}</h3>
+             </div>
 
-                    <div className ="product-description">
-                        <p>{product.description}</p>
-                    </div>
+             <div className ="product-description">
+                 <p>{product.description}</p>
+             </div>
 
-                    <div className ="product-price">
-                        Rs {product.price} <button onClick={()=>addToWishList(product)}>wish</button>
-                    </div>
+             <div className ="product-price">
+                 Rs {product.price} 
+                 <span><BsFillHeartFill onClick={()=>addToWishList(product)}/></span>
+                
+             </div>
 
-                    <div  className="btn-div">
-                        <button  onClick={()=>addToCart(product)}
-                        className="product-add-button"> ADD TO cart</button>
-                       
+             <div  className="btn-div">
+                 <button  onClick={()=>addToCart(product)}
+                 className="product-add-button"> ADD TO cart</button>
+                
 
-                    </div>
-                   
+             </div>
+            
 
 
-               </div>
-          ))}
-      </div>
+        </div>
+   ))}
+</div>
+
     
     
   );
