@@ -2,14 +2,35 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import setupMockServer from "../../api/mockserver";
 import "./Home.css"
+import { useCart } from "../../context/CartContext";
 const Home = () => {
+  const {itemsInCart , setItemsInCart} = useCart();
   const [products, setProducts] = useState([]);
+  const[loader , setLoader] = useState(false);
+ 
+
+
+  const addToCart =(product) =>{
+    console.log('adding to cart')
+    let newCart = [...itemsInCart];
+    let finalItemInCart = newCart.find((item)=>product.id === item.id)
+    if(!finalItemInCart){
+      finalItemInCart ={...product}
+      newCart.push(finalItemInCart)
+      setItemsInCart(newCart)
+
+    }
+    
+    
+  }
   useEffect(() => {
     (async function () {
       try {
         setupMockServer();
+        setLoader(true)
         const response = await axios.get("/api/users");
         console.log(response.data.users);
+        setLoader(false)
         setProducts(response.data.users);
       } catch (error) {
         console.log("error");
@@ -18,9 +39,11 @@ const Home = () => {
   }, []);
   console.log(products);
   return (
+     
       <div className ="products">
+        {loader && <div className="lds-heart"><div></div></div>}
           {products.map((product,index)=>(
-              <div className ="card">
+              <div key={index} className ="card">
                     <div>
                         <img className="product-image" src={product.image} alt={product.name}/>
                     </div>
@@ -34,12 +57,16 @@ const Home = () => {
                     </div>
 
                     <div className ="product-price">
-                        {product.price}
+                        Rs {product.price} <button>wish</button>
                     </div>
 
-                    <div >
-                        <button className="product-add-button">Add to cart</button>
+                    <div  className="btn-div">
+                        <button  onClick={()=>addToCart(product)}
+                        className="product-add-button"> ADD TO cart</button>
+                       
+
                     </div>
+                   
 
 
                </div>
