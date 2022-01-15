@@ -1,37 +1,40 @@
-import React from 'react'
-import { useCart} from "../../context/CartContext"
-import "./Cart.css"
+import React from "react";
+import { useCart } from "../../context/CartContext";
+import { Scrollbars } from "react-custom-scrollbars-2";
+import "./Cart.css";
+import Items from "./Items";
 const Cart = () => {
- const  {itemsInCart } = useCart();
- console.log({itemsInCart})
-    return (
-        <div>
-            <h1>Cart {itemsInCart.length} </h1>
-            <div className ="products-cart">
-            {itemsInCart.map((cartItem,index)=>(
-                
-              <div key={index} className ="card-cart">
-                    <div>
-                        <img className="product-image-cart" src={cartItem.image} alt={cartItem.name}/>
-                    </div>
+  const { itemsInCart, count } = useCart();
+  console.log({ itemsInCart });
+  console.log(count);
+  return (
+    <>
+      <section className="main-cart-section">
+        <p className="total-items">
+          You have <span className="total-items-count">7</span> items in
+          shopping cart
+        </p>
 
-                    <div className ="product-name-cart">
-                        <h3>{cartItem.name}</h3>
-                    </div>
-
-                    <div className ="product-description-cart">
-                        <p>{cartItem.description}</p>
-                    </div>
-
-                    <div className ="product-price-cart">
-                        Rs {cartItem.price} 
-                    </div>
-
-               </div>
-          ))}
-      </div>
+        <div className="cart-items">
+          <div className="cart-items-container">
+            <Scrollbars>
+				{itemsInCart .map((item)=>(
+						<Items key ={item.id} {...item}/>
+				))}
+              
+            </Scrollbars>
+          </div>
         </div>
-    )
-}
 
-export default Cart
+        <div className="card-total">
+          <h3>
+            Cart Total : <span>2000000 Rs</span>
+          </h3>
+          <button>Checkout</button>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Cart;

@@ -7,6 +7,8 @@ const Home = () => {
   const {itemsInCart , setItemsInCart} = useCart();
   const [products, setProducts] = useState([]);
   const[loader , setLoader] = useState(false);
+ 
+
 
   const addToCart =(product) =>{
     console.log('adding to cart')

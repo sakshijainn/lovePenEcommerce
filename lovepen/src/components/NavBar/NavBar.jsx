@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import {ImCross} from "react-icons/im"
 import {FiMenu} from "react-icons/fi"
 import {AiFillHome} from "react-icons/ai"
-import {BsFillCartCheckFill} from "react-icons/bs"
+import {BsFillCartCheckFill,BsToggleOff} from "react-icons/bs"
 import {FaRegHeart,FaUserAlt} from "react-icons/fa"
 
 
@@ -21,7 +21,7 @@ const NavBar = () => {
             <h3 className ="logo"> 
          
             LovePEN</h3>
-            <button onClick={toggleTheme}> mode{theme ==="light" ?"dark":"light"} </button>
+            <BsToggleOff style={{fontSize:"20px"}} onClick={toggleTheme}/>
            
             <ul className={isMobile?"nav-links-mobile":"nav-links"}
               onClick={()=>setMobile(false)}
