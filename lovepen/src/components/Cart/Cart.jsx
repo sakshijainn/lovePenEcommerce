@@ -1,12 +1,13 @@
 import React, { useState , useEffect} from "react";
 import { useCart } from "../../context/CartContext";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import {Link} from "react-router-dom"
 import "./Cart.css";
 import Items from "./Items";
 
 const Cart = () => {
   const { itemsInCart } = useCart();
-  const [cartTotal, setCartTotal] = useState(0);
+  const {cartTotal, setCartTotal}= useCart();
 
   const total = () => {
     let totalVal = 0;
@@ -42,7 +43,9 @@ const Cart = () => {
           <h3>
             Cart Total : <span>{cartTotal} Rs</span>
           </h3>
+          <Link to ="/checkout">
           <button>Checkout</button>
+          </Link>
         </div>
       </section>
     </>
