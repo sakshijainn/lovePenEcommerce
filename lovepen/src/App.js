@@ -5,6 +5,7 @@ import Home from "./components/Home/Home.jsx"
 import Cart from "./components/Cart/Cart.jsx"
 import Wishlist from "./components/Wishlist/Wishlist.jsx"
 import Login from "./components/Login/Login.jsx"
+import ProductDetail from './components/ProductDetail/ProductDetail.jsx'
 const App = () => {
   return (
    <Router>
@@ -26,6 +27,8 @@ const App = () => {
         <Route path ="/login" component= {Login} exact>
           <Login/>
         </Route>
+
+        <Route path ="/product/:id" component ={ProductDetail} exact/>
 
      </Switch>
    </Router>

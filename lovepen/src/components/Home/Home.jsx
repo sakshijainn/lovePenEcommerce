@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+import{Link} from "react-router-dom"
 import axios from "axios";
 import setupMockServer from "../../api/mockserver";
 import "./Home.css"
 import { useCart } from "../../context/CartContext";
 import { useWishList } from "../../context/WishListContext";
 import {BsFillHeartFill} from "react-icons/bs"
+import { useProduct } from "../../context/ProductContext";
 
 
 
 const Home = () => {
   const {itemsInCart , setItemsInCart} = useCart();
   const{itemsInWishList , setItemsInWishList} = useWishList();
-  const [products, setProducts] = useState([]);
+  const {products, setProducts} =  useProduct();
   const[loader , setLoader] = useState(false);
  
 
@@ -64,7 +66,9 @@ const Home = () => {
    {products.map((product,index)=>(
        <div key={index} className ="card">
              <div>
+                 <Link to={{pathname : `/product/${product.id}` , state:{products : product}}}>
                  <img className="product-image" src={product.image} alt={product.name}/>
+                 </Link>
              </div>
 
              <div className ="product-name">
