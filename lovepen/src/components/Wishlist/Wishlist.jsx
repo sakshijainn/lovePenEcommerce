@@ -4,7 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import WishListItems from "./WishListItems"
 import "./WishList.css"
 const Wishlist = () => {
-    const {itemsInWishList} = useWishList();
+    const {state:{itemsInWishList}} = useWishList();
     console.log(itemsInWishList)
     return (
      <>

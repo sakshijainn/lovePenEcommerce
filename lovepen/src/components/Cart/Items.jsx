@@ -1,70 +1,85 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { useCart } from "../../context/CartContext";
-const Items = ({ name, id, image, description, price, quantity }) => {
-  const { itemsInCart, setItemsInCart } = useCart();
+const Items = (prod) => {
+  // const { itemsInCart, setItemsInCart } = useCart();
 
-  const removeItem = (index) => {
-    console.log("product id to be removed:", index);
+  const
+   {state:{itemsInCart}, cartDispatch}  = useCart();
 
-    const newCart = itemsInCart.filter(
-      (currItem) => currItem.id !== index
-    );
 
-    setItemsInCart(newCart);
-  };
 
-  const countIncrement = (index) => {
-    setItemsInCart((itemsInCart) =>
-      itemsInCart.map((currItem) =>
-        currItem.id === index
-          ? { ...currItem, quantity: currItem.quantity + 1 }
-          : currItem
-      )
-    );
-  };
+  // const removeItem = (index) => {
+  //   console.log("product id to be removed:", index);
 
-  const countDecrement = (index) => {
-    setItemsInCart((itemsInCart) =>
-      itemsInCart.map((currItem) =>
-        currItem.id === index
-          ? {
-              ...currItem,
-              quantity: currItem.quantity - (currItem.quantity > 0 ? 1 : 0),
-            }
-          : currItem
-      )
-    );
-  };
+  //   const newCart = itemsInCart.filter(
+  //     (currItem) => currItem.id !== index
+  //   );
+
+  //   setItemsInCart(newCart);
+  // };
+
+  // const countIncrement = (index) => {
+  //   setItemsInCart((itemsInCart) =>
+  //     itemsInCart.map((currItem) =>
+  //       currItem.id === index
+  //         ? { ...currItem, quantity: currItem.quantity + 1 }
+  //         : currItem
+  //     )
+  //   );
+  // };
+
+  // const countDecrement = (index) => {
+  //   setItemsInCart((itemsInCart) =>
+  //     itemsInCart.map((currItem) =>
+  //       currItem.id === index
+  //         ? {
+  //             ...currItem,
+  //             quantity: currItem.quantity - (currItem.quantity > 0 ? 1 : 0),
+  //           }
+  //         : currItem
+  //     )
+  //   );
+  // };
 
   return (
     <>
       <div className="items-info">
         <div className="product-img">
-          <img src={image} alt="product-image" />
+          <img src={prod.image} alt="product-image" />
         </div>
 
         <div className="title">
-          <h2>{name}</h2>
-          <p>{description}</p>
+          <h2>{prod.name}</h2>
+          <p>{prod.description}</p>
         </div>
 
         <div className="add-minus-quantity">
           <AiOutlineMinus
-            onClick={() => countDecrement(id)}
+            // onClick={() => countDecrement(id)}
+            onClick={()=>cartDispatch({type:"DECREMENT_QTY" , payload : prod})}
             className="minus"
           />
-          <span>{quantity}</span>
-          <AiOutlinePlus onClick={() => countIncrement(id)} className="add" />
+          <span>{prod.quantity}</span>
+          
+          <AiOutlinePlus 
+          // onClick={() => countIncrement(id)} 
+          onClick={()=>cartDispatch({type:"INCREMENT_QTY" , payload : prod})}
+          className="add" />
+         
+          
         </div>
 
         <div className="price">
-          <h3>{price * quantity}</h3>
+          <h3>{prod.price * prod.quantity}</h3>
         </div>
 
         <div className="remove-item">
-          <ImCross onClick={() => removeItem(id)} className="remove" />
+          <ImCross
+          //  onClick={() => removeItem(id)}
+          onClick={()=>cartDispatch({type:"REMOVE_FROM_CART" , payload : prod})}
+            className="remove" />
         </div>
       </div>
       <hr />

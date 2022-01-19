@@ -6,20 +6,13 @@ import "./Cart.css";
 import Items from "./Items";
 
 const Cart = () => {
-  const { itemsInCart } = useCart();
-  const {cartTotal, setCartTotal}= useCart();
+  const { state:{itemsInCart , totalAmount}, cartDispatch } = useCart();
 
-  const total = () => {
-    let totalVal = 0;
-    for (let i = 0; i < itemsInCart.length; i++) {
-      totalVal += itemsInCart[i].price * itemsInCart[i].quantity;
-    }
-    setCartTotal(totalVal);
-  };
+  useEffect(()=>{
+    cartDispatch({type:"GET_TOTAL"})
+  },[itemsInCart])
 
-  useEffect(() => {
-    total();
-  }, [itemsInCart]);
+
 
   return (
     <>
@@ -41,7 +34,7 @@ const Cart = () => {
 
         <div className="card-total">
           <h3>
-            Cart Total : <span>{cartTotal} Rs</span>
+            Cart Total : <span>{totalAmount} Rs</span>
           </h3>
           <Link to ="/checkout">
           <button>Checkout</button>
