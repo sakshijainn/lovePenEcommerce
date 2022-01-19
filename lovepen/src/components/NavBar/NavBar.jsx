@@ -14,8 +14,11 @@ import { useTheme } from '../../context/ThemeContext'
 
 
 const NavBar = () => {
-    const{itemsInCart} = useCart();
-    const {itemsInWishList} = useWishList();
+    const{state:{itemsInCart}} = useCart();
+
+
+    const {state:{itemsInWishList}} = useWishList();
+
     const { toggleTheme } = useTheme();
     const[isMobile ,setMobile] = useState(false)
     return (
