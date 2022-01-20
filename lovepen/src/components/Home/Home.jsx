@@ -9,45 +9,29 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { useProduct } from "../../context/ProductContext";
 
 const Home = () => {
-  // const { itemsInCart, setItemsInCart } = useCart();
-
   //STEP 3 : PASS THE STATE TO COMPONENT
-  const {state:{itemsInCart}, cartDispatch} = useCart();
-  console.log("usereducerstate",itemsInCart)
+  const {
+    state: { itemsInCart },
+    cartDispatch,
+  } = useCart();
 
-  const { state:{itemsInWishList}, wishlistDispatch} = useWishList();
+  const {
+    state: { itemsInWishList },
+    wishlistDispatch,
+  } = useWishList();
 
-  console.log("wishlistreducer", itemsInWishList)
-
-
-  // const { products, setProducts } = useProduct();
-
-  const {state:{products}, productDispatch} = useProduct();
+  const {
+    state: { products },
+    productDispatch,
+  } = useProduct();
   const [loader, setLoader] = useState(false);
 
-  // const addToCart = (product) => {
-  //   console.log("adding to cart");
-  //   let newCart = [...itemsInCart];
-  //   let finalItemInCart = newCart.find((item) => product.id === item.id);
-  //   if (!finalItemInCart) {
-  //     finalItemInCart = { ...product };
-  //     newCart.push(finalItemInCart);
-  //     setItemsInCart(newCart);
-  //   }
-  // };
+  const {
+    filterState: { searchQuery, sort },
+    filterDispatch,
+  } = useProduct();
 
-  // const addToWishList = (product) => {
-  //   console.log("adding to wishlist");
-  //   let newWishList = [...itemsInWishList];
-  //   let finalItemInWishList = newWishList.find(
-  //     (item) => product.id === item.id
-  //   );
-  //   if (!finalItemInWishList) {
-  //     finalItemInWishList = { ...product };
-  //     newWishList.push(finalItemInWishList);
-  //     setItemsInWishList(newWishList);
-  //   }
-  // };
+  console.log("sortkaunsahai", sort);
 
   useEffect(() => {
     (async function () {
@@ -65,61 +49,148 @@ const Home = () => {
     })();
   }, []);
 
+  const transformProducts = () => {
+    let sortedProducts = products;
+    if (sort) {
+      sortedProducts = sortedProducts.sort((a, b) =>
+        sort === "lowtoHigh" ? a.price - b.price : b.price - a.price
+      );
+    }
+
+    if (sort) {
+      sortedProducts = sortedProducts.sort((a, b) =>
+        sort ==="highToLow" ? b.price - a.price : a.price - b.price
+      );
+    }
+
+    if(searchQuery)
+    {
+      sortedProducts = sortedProducts.filter((prod)=>(
+        prod.name.toLowerCase().includes(searchQuery)
+      ))
+    }
+    return sortedProducts;
+  };
+
   return (
-    <div className="products">
-      {loader && (
-        <div className="lds-heart">
-          <div></div>
-        </div>
-      )}
-      {products.map((product, index) => (
-        <div key={index} className="card">
-          <div>
-            <Link
-              to={{
-                pathname: `/product/${product.id}`,
-                state: { products: product },
-              }}
-            >
-              <img
-                className="product-image"
-                src={product.image}
-                alt={product.name}
-              />
-            </Link>
-          </div>
+    <>
+      <div className="filters">
+        <form className="search-container">
+          <input
+            onChange={(e) =>
+              filterDispatch({
+                type: "FILTER_BY_SEARCH",
+                payload: e.target.value,
+              })
+            }
+            type="text"
+            className="search-bar"
+            placeholder="What can I help you with today?"
+          />
+          
+        </form>
 
-          <div className="product-name">
-            <h3>{product.name}</h3>
-          </div>
+        <fieldset className="sort">
+          <label>
+            <input
+              onChange={() =>
+                filterDispatch({ type: "SORT_BY_PRICE", payload: "lowToHigh" })
+              }
+              checked={sort === "lowToHigh" ? true : false}
+              type="radio"
+              name="sort"
+            ></input>{" "}
+            Price - Low to High
+          </label>
+          <label>
+            <input
+              onChange={() =>
+                filterDispatch({ type: "SORT_BY_PRICE", payload: "highToLow" })
+              }
+              checked={sort === "highToLow" ? true : false}
+              type="radio"
+              name="sort"
+            ></input>{" "}
+            Price - High to Low
+          </label>
 
-          <div className="product-description">
-            <p>{product.description}</p>
-          </div>
+          <a
+            onClick={() => filterDispatch({ type: "CLEAR_FILTERS" })}
+            style={{
+              color: "white",
+              marginLeft: "50px",
+              margin:"10px",
+              padding: "10px",
+              borderRadius: "10px",
+              cursor: "pointer",
+            }}
+          >
+            Clear Filter
+          </a>
 
-          <div className="product-price">
-            Rs {product.price}
-            <span>
-              <BsFillHeartFill 
-              onClick={()=>wishlistDispatch({type:"ADD_TO_WISH" , payload : product})}
-              // onClick={() => addToWishList(product)}
-               />
-            </span>
-          </div>
+         
+        </fieldset>
+      </div>
 
-          <div className="btn-div">
-            <button
-              // onClick={() => addToCart(product)}
-              onClick={()=>cartDispatch({type:"ADD_TO_CART" , payload : product})}
-              className="product-add-button"
-            >
-              {" "}
-              ADD TO cart
-            </button>
+      <div className="products">
+        {loader && (
+          <div className="lds-heart">
+            <div></div>
           </div>
-        </div>
-      ))}
-    </div>
+        )}
+        {transformProducts().map((product, index) => (
+          <div key={index} className="card">
+            <div>
+              <Link
+                to={{
+                  pathname: `/product/${product.id}`,
+                  state: { products: product },
+                }}
+              >
+                <img
+                  className="product-image"
+                  src={product.image}
+                  alt={product.name}
+                />
+              </Link>
+            </div>
+
+            <div className="product-name">
+              <h3>{product.name}</h3>
+            </div>
+
+            <div className="product-description">
+              <p>{product.description}</p>
+            </div>
+
+            <div className="product-price">
+              Rs {product.price}
+              <span>
+                <BsFillHeartFill
+                  onClick={() =>
+                    wishlistDispatch({ type: "ADD_TO_WISH", payload: product })
+                  }
+                  // onClick={() => addToWishList(product)}
+                />
+              </span>
+            </div>
+
+            <div className="btn-div">
+              <button
+                // onClick={() => addToCart(product)}
+                onClick={() =>
+                  cartDispatch({ type: "ADD_TO_CART", payload: product })
+                }
+                className="product-add-button"
+              >
+                {" "}
+                ADD TO cart
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

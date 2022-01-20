@@ -1,4 +1,4 @@
-.products
+ .products
 {
     margin:20px auto;
     width:90%;
@@ -98,6 +98,48 @@
     
 }
 
+.filters 
+{
+  background-color: black;
+  color: whitesmoke;
+  width: 100%;
+  height: 60%;
+  border-radius: 10px;
+}
+fieldset
+{
+  border: none;
+}
+
+.filters .search-container{
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+input .search-bar{
+  margin: 0 auto;
+  width: 50%;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 1rem;
+  border: 1px solid #D0CFCE;
+  outline: none;
+}
+
+.sort 
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+ 
+
+
+
+
 
 .lds-heart {
     display: inline-block;
@@ -155,4 +197,4 @@
     }
   }
   
-
+ 
