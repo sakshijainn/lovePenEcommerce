@@ -2,7 +2,8 @@ import React from "react";
 import { useCart } from "../../context/CartContext";
 import "./CheckOut.css"
 const CheckOut = () => {
-    const {itemsInCart, cartTotal} = useCart();
+    const {state:{itemsInCart, totalAmount}} = useCart();
+    console.log(totalAmount)
   return (
     <>
       
@@ -30,7 +31,7 @@ const CheckOut = () => {
             <p>
               Total{" "}
               <span className="price" style={{color:"black"}}>
-                <b>Rs {cartTotal}</b>
+                <b>Rs {totalAmount}</b>
               </span>
             </p>
           </div>

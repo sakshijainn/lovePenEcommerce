@@ -7,6 +7,7 @@ import Wishlist from "./components/Wishlist/Wishlist.jsx"
 import Login from "./components/Login/Login.jsx"
 import ProductDetail from './components/ProductDetail/ProductDetail.jsx'
 import CheckOut from './components/CheckOut/CheckOut.jsx'
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx"
 const App = () => {
   return (
    <Router>
@@ -31,7 +32,8 @@ const App = () => {
 
         <Route path ="/product/:id" component ={ProductDetail} exact/>
 
-        <Route path ="/checkout" component={CheckOut} exact/>
+        {/* <Route path ="/checkout" component={CheckOut} exact/> */}
+        <ProtectedRoute path ="/checkout" component ={CheckOut} auth={true} />
 
      </Switch>
    </Router>
