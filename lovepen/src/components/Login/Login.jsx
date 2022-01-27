@@ -3,7 +3,7 @@ import "./Login.css"
 const Login = () => {
     return (
         <div>
-            <h3>I am lOgged in</h3>
+            <h3>chaabi laaya kya ?</h3>
         </div>
     )
 }
