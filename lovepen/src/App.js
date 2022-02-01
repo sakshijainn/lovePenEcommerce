@@ -7,15 +7,15 @@ import Wishlist from "./components/Wishlist/Wishlist.jsx"
 import Login from "./components/Login/Login.jsx"
 import ProductDetail from './components/ProductDetail/ProductDetail.jsx'
 import CheckOut from './Private/CheckOut/CheckOut.jsx'
-import { useAuth } from './context/AuthContext.js'
+import {PrivateRoute} from "./Private/CheckOut/PrivateRoute.jsx"
 
   // const login = false;
 
-  function PrivateRoute({ login  ,  ...props })
-  {
+  // function PrivateRoute({ login  ,  ...props })
+  // {
     
-    return login ? <Route {...props} /> : <Redirect replace to = "/login" />
-  }
+  //   return login ? <Route {...props} /> : <Redirect replace to = "/login" />
+  // }
   
   // const PrivateRoute = ({ login, component: Component, ...rest }) => {
   //   return (
@@ -38,7 +38,7 @@ const App = () => {
 
   // const[login , setLogin] = useState(false)
   // console.log(login)
-  const {isUserLogin} = useAuth();
+  // const {isUserLogin} = useAuth();
 
 
 
@@ -66,7 +66,7 @@ const App = () => {
 
         <Route path ="/product/:id" component ={ProductDetail} exact/>
 
-       <PrivateRoute path ="/checkout" login={isUserLogin} component={CheckOut}/>
+       <PrivateRoute path ="/checkout" component={CheckOut}/>
       
 
       
