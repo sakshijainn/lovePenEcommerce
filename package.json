@@ -1,0 +1,38 @@
+{
+  "name": "lovepenecommerce",
+  "version": "1.0.0",
+  "description": "It is a react based e-commerce app",
+  "main": "lovepen-backend/server.js",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "history": "^5.2.0",
+    "js-tokens": "^4.0.0",
+    "loose-envify": "^1.4.0",
+    "mongoose": "^6.3.3",
+    "nodemon": "^2.0.16",
+    "object-assign": "^4.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-router": "^6.2.1",
+    "react-router-dom": "^6.2.1",
+    "regenerator-runtime": "^0.13.9",
+    "scheduler": "^0.20.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node lovepen-backend/server.js",
+    "dev" : "nodemon lovepen-backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakshijainn/lovePenEcommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sakshijainn/lovePenEcommerce/issues"
+  },
+  "homepage": "https://github.com/sakshijainn/lovePenEcommerce#readme"
+}
