@@ -35,7 +35,8 @@ const product = require("./routes/product.route")
 
 //Use the route 
 
-app.use("/api/v1" , product)
+app.use('/products', product);
+
 
 
 /**

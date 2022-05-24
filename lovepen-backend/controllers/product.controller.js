@@ -1,12 +1,12 @@
 const Product = require ("../models/product.model.js")
-const {extend} = require("lodash")
+const {extend} = require("lodash");
+const allErrorsHandler = require("../middlewares/all-error-handler.middleware.js");
 
 
 //get all products 
 exports.getAllProducts = async (req, res) => {
 	try {
 		const products = await Product.find({});
-
 		res.status(200).json({ response: products, success: true });
 	} catch (error) {
 		res.status(500).json({
@@ -19,17 +19,23 @@ exports.getAllProducts = async (req, res) => {
 
 
 //get all products by id
-exports.getProductById = async (req, res) => {
+exports.getProductById = async (req, res , next) => {
+
 	try {
 		const productId = req.params;
-
+		
 		const product = await Product.findById({ _id: productId.id });
 		if (product) {
+			
 			res.status(200).json({ response: product, success: true });
 		} else {
-			res.status(404).json({ success: false, message: 'No product found' });
+			
+			// res.status(404).json({ success: false, message: 'No product found' });
+			return next(new allErrorsHandler("Product Not Found",404))
 		}
-	} catch (error) {
+	} 
+	
+	catch (error) {
 		res.status(500).json({
 			success: false,
 			message: 'Request failed please check errorMessage key for more details',
@@ -70,16 +76,12 @@ exports.updateProduct = async(req,res,next)=>{
 	{
 
         let productToBeUpdated = await Product.findById(req.params.id)
+
 		const productUpdates = req.body;
 
 		if(!productToBeUpdated)
 		{
-			return res.status(500).json(
-				{
-					success: true,
-					message : "Product Not Found"
-				}
-			)
+			return next(new allErrorsHandler("Product Not Found",404))
 		}
 	
 		productToBeUpdated =extend(productToBeUpdated,productUpdates)
@@ -107,12 +109,7 @@ exports.deleteProduct = async(req,res,next)=>{
 
 		if(!productToBeDeleted)
 		{
-			return res.status(500).json(
-				{
-					success: true,
-					message : "Product Not Found"
-				}
-			)
+			return next(new allErrorsHandler("Product Not Found",404))
 		}
 
 		await productToBeDeleted.remove()
@@ -135,3 +132,30 @@ exports.deleteProduct = async(req,res,next)=>{
 
 
 
+//Search a product
+
+exports.searchProduct =  async(req,res)=>{
+
+	try 
+	{
+		let dataToBeSearched = await Product.find({
+			"$or": [
+				{ name : {$regex :req.params.key}}
+			]
+		})
+		res.status(200).json({success: true, response : dataToBeSearched})
+	}
+
+	catch(error)
+	{
+		res.status(500).json({
+			success: false,
+			message: 'Request failed please check errorMessage key for more details',
+			errorMessage: error.message,
+		});
+	}
+
+		
+	
+
+}
