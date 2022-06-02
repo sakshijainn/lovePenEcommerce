@@ -137,38 +137,28 @@ exports.deleteProduct = async(req,res,next)=>{
 
 //Search a product
 
-exports.searchProduct= async(req,res)=>{
-	
-	let result = await Product.find({
-		"$or": [
-			{name  : {$regex:req.params.key}}
-		]
+
+exports.searchProduct =  async(req,res)=>{
+
+	try 
+	{
+	const searchedField = req.query.name
+	Product.find({name : {$regex : searchedField , $options : '$i'}})
+	.then(data =>{
+		res.send(data)
 	})
-	res.send(result)
-}
+	}
 
-// exports.searchProduct =  async(req,res)=>{
-
-// 	try 
-// 	{
-// 		let dataToBeSearched = await Product.find({
-// 			"$or": [
-// 				{ name : {$regex :req.params.key}}
-// 			]
-// 		}).populate('category').sort({createdAt :-1})
-// 		res.status(200).json({success: true, response : dataToBeSearched})
-// 	}
-
-// 	catch(error)
-// 	{
-// 		res.status(500).json({
-// 			success: false,
-// 			message: 'Request failed please check errorMessage key for more details',
-// 			errorMessage: error.message,
-// 		});
-// 	}
+	catch(error)
+	{
+		res.status(500).json({
+			success: false,
+			message: 'Request failed please check errorMessage key for more details',
+			errorMessage: error.message,
+		});
+	}
 
 		
 	
 
-// }
+}

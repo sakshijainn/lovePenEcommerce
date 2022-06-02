@@ -6,8 +6,9 @@ const router = express.Router();
 
 
 router.route('/').get(getAllProducts).post(createProduct);
+router.route('/search').get(searchProduct);
 router.route('/:id').get(getProductById);
-router.route('/search/:key').get(searchProduct);
+
 
 
 
