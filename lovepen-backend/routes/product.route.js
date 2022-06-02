@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const express = require("express");
-const { getAllProducts ,createProduct , updateProduct , getProductById, searchProduct ,deleteProduct} = require("../controllers/product.controller");
+const { getAllProducts ,ProductList , createProduct , updateProduct , getProductById, searchProduct ,deleteProduct} = require("../controllers/product.controller");
 
 const router = express.Router();
 
@@ -8,6 +8,7 @@ const router = express.Router();
 router.route('/').get(getAllProducts).post(createProduct);
 router.route('/:id').get(getProductById);
 router.route('/search/:key').get(searchProduct);
+
 
 
 //TRIED FOR BACKEND 

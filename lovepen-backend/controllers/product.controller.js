@@ -3,10 +3,12 @@ const {extend} = require("lodash");
 const allErrorsHandler = require("../middlewares/all-error-handler.middleware.js");
 
 
+
+
 //get all products 
 exports.getAllProducts = async (req, res) => {
 	try {
-		const products = await Product.find({});
+		const products = await Product.find({})
 		res.status(200).json({ response: products, success: true });
 	} catch (error) {
 		res.status(500).json({
@@ -132,30 +134,41 @@ exports.deleteProduct = async(req,res,next)=>{
 
 
 
+
 //Search a product
 
-exports.searchProduct =  async(req,res)=>{
+exports.searchProduct= async(req,res)=>{
+	
+	let result = await Product.find({
+		"$or": [
+			{name  : {$regex:req.params.key}}
+		]
+	})
+	res.send(result)
+}
 
-	try 
-	{
-		let dataToBeSearched = await Product.find({
-			"$or": [
-				{ name : {$regex :req.params.key}}
-			]
-		})
-		res.status(200).json({success: true, response : dataToBeSearched})
-	}
+// exports.searchProduct =  async(req,res)=>{
 
-	catch(error)
-	{
-		res.status(500).json({
-			success: false,
-			message: 'Request failed please check errorMessage key for more details',
-			errorMessage: error.message,
-		});
-	}
+// 	try 
+// 	{
+// 		let dataToBeSearched = await Product.find({
+// 			"$or": [
+// 				{ name : {$regex :req.params.key}}
+// 			]
+// 		}).populate('category').sort({createdAt :-1})
+// 		res.status(200).json({success: true, response : dataToBeSearched})
+// 	}
+
+// 	catch(error)
+// 	{
+// 		res.status(500).json({
+// 			success: false,
+// 			message: 'Request failed please check errorMessage key for more details',
+// 			errorMessage: error.message,
+// 		});
+// 	}
 
 		
 	
 
-}
+// }
