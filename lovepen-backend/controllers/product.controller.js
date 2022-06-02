@@ -142,12 +142,50 @@ exports.searchProduct =  async(req,res)=>{
 
 	try 
 	{
-	const searchedField = req.query.name
-	Product.find({name : {$regex : searchedField , $options : '$i'}})
-	.then(data =>{
-		res.send(data)
-	})
+		const searchedField = req.query.name
+		let filteredData = await Product.find
+		({name : {$regex : searchedField , $options : '$i'}})
+		
+		return res.status(200).send(filteredData)
 	}
+	
+	
+
+	catch(error)
+	{
+		res.status(500).json({
+			success: false,
+			message: 'Request failed please check errorMessage key for more details',
+			errorMessage: error.message,
+		});
+	}
+
+		
+	
+
+}
+
+//Sort the Product
+
+exports.sortProduct =  async(req,res)=>{
+
+	try 
+	{
+		
+
+	     let ascendingSortedData = await Product.find().sort({createdAt: -1});
+		 return res.status(200).send(ascendingSortedData)
+      
+    }
+		
+		
+
+		
+
+		
+	
+	
+	
 
 	catch(error)
 	{
