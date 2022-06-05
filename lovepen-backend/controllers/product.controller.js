@@ -1,12 +1,18 @@
 const Product = require("../models/product.model.js");
 const { extend } = require("lodash");
 const allErrorsHandler = require("../middlewares/all-error-handler.middleware.js");
+const { async } = require("regenerator-runtime");
 
 //get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.status(200).json({ response: products, success: true });
+    let query = {};
+    if (req.query.keyword) {
+      query.$or = [{ name: { $regex: req.query.keyword, $options: "i" } }];
+    }
+    let products = await Product.find(query)
+      .sort({ createdAt: -1 });
+    return res.status(200).json({ response: products, success: true });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -102,36 +108,5 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
-//Search a product
 
-exports.searchProduct = async (req, res) => {
-  try {
-    const searchedField = req.query.name;
-    let filteredData = await Product.find({
-      name: { $regex: searchedField, $options: "$i" },
-    });
 
-    return res.status(200).send(filteredData);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Request failed please check errorMessage key for more details",
-      errorMessage: error.message,
-    });
-  }
-};
-
-//Sort the Product
-
-exports.sortProduct = async (req, res) => {
-  try {
-    let ascendingSortedData = await Product.find().sort({ createdAt: -1 });
-    return res.status(200).send(ascendingSortedData);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Request failed please check errorMessage key for more details",
-      errorMessage: error.message,
-    });
-  }
-};

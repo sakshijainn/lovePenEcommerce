@@ -41,6 +41,7 @@ const productSchema = new mongoose.Schema(
       required: "Please enter product quantity ",
       default: 1,
     },
+    created_by : { type: mongoose.Schema.Types.ObjectId }
     
   },
   {
